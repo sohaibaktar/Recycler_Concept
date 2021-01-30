@@ -19,10 +19,17 @@ public class MainActivity extends AppCompatActivity {
         setTitle("Recycler and Card View Demo Practice");
 
         rcv = (RecyclerView)findViewById(R.id.recview);
-        rcv.setLayoutManager(new LinearLayoutManager(this));
+        //rcv.setLayoutManager(new LinearLayoutManager(this));
         adapter = new myadapter(dataqueue());
         rcv.setAdapter(adapter);
+
+        /* ................. This line only for to show horizontal layout ......this is for space free  ...................*/
+         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+         rcv.setLayoutManager(layoutManager);
+
+
     }
+    /*.....Take Array list to take input.......*/
     public ArrayList<Model> dataqueue() {
 
         ArrayList<Model> holder = new ArrayList<>();
