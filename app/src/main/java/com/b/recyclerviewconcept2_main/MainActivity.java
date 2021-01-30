@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         rcv = (RecyclerView)findViewById(R.id.recview);
         //rcv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new myadapter(dataqueue());
+        adapter = new myadapter(dataqueue(),getApplicationContext());
         rcv.setAdapter(adapter);
 
         /* ................. This line only for to show horizontal layout ......this is for space free  ...................*/

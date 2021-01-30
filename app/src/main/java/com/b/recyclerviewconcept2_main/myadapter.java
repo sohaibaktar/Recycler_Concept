@@ -1,5 +1,7 @@
 package com.b.recyclerviewconcept2_main;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,11 @@ import java.util.ArrayList;
 public class myadapter extends RecyclerView.Adapter<myviewholder> {
 
     ArrayList<Model> data;
-
-    public myadapter(ArrayList<Model> data) {
+    Context context;
+    public myadapter(ArrayList<Model> data,Context context)
+    {
         this.data = data;
+        this.context = context;
     }
 
     @NonNull
@@ -27,11 +31,25 @@ public class myadapter extends RecyclerView.Adapter<myviewholder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myviewholder holder, int position) {
+    public void onBindViewHolder(@NonNull myviewholder holder, int position)
+    {
+        final Model temp =data.get(position);
 
         holder.t1.setText(data.get(position).getHeader());
         holder.t2.setText(data.get(position).getDesc());
         holder.img.setImageResource(data.get(position).getImgname());
+
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context,ClickView.class);
+                intent.putExtra("imagename",temp.getImgname());
+                intent.putExtra("header",temp.getHeader());
+                intent.putExtra("desc",temp.getDesc());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
