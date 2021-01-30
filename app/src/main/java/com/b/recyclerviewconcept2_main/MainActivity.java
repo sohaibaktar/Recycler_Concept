@@ -1,6 +1,7 @@
 package com.b.recyclerviewconcept2_main;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,10 +25,12 @@ public class MainActivity extends AppCompatActivity {
         rcv.setAdapter(adapter);
 
         /* ................. This line only for to show horizontal layout ......this is for space free  ...................*/
-         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-         rcv.setLayoutManager(layoutManager);
+         //LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
+         //rcv.setLayoutManager(layoutManager);
 
-
+        /*....This is grid Layout .......*/
+        GridLayoutManager layoutManager = new GridLayoutManager(this,2);
+        rcv.setLayoutManager(layoutManager);
     }
     /*.....Take Array list to take input.......*/
     public ArrayList<Model> dataqueue() {
