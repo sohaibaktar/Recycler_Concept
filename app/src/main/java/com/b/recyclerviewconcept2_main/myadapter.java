@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.ListAdapter;
@@ -12,14 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class myadapter extends RecyclerView.Adapter<myviewholder> {
+public class myadapter extends RecyclerView.Adapter<myviewholder> implements Filterable {
 
     ArrayList<Model> data;
+    ArrayList<Model> backup;
     Context context;
     public myadapter(ArrayList<Model> data,Context context)
     {
         this.data = data;
         this.context = context;
+        backup = new ArrayList<>(data);
     }
 
     @NonNull
@@ -56,4 +60,39 @@ public class myadapter extends RecyclerView.Adapter<myviewholder> {
     public int getItemCount() {
         return data.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
+    Filter filter = new Filter() {
+        @Override
+        ///background threar
+        protected FilterResults performFiltering(CharSequence keyword) {
+            ArrayList<Model> filterdata = new ArrayList<>();
+            if(keyword.toString().isEmpty())
+                filterdata.addAll(backup);
+            else
+            {
+               for(Model obj:backup)
+               {
+                   if(obj.getHeader().toString().toLowerCase().contains(keyword.toString().toLowerCase()))
+                       filterdata.add(obj);
+               }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filterdata;
+            return results;
+        }
+
+        @Override
+        //main thread
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+
+            data.clear();
+            data.addAll((ArrayList<Model>)filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
+
 }

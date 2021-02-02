@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 
@@ -81,5 +84,31 @@ public class MainActivity extends AppCompatActivity {
         holder.add(ob7);
 
 return holder;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+        MenuItem item = menu.findItem(R.id.search_menu);
+
+        SearchView searchView = (SearchView) item.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s)
+            {
+                adapter.getFilter().filter(s);
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+
     }
 }
